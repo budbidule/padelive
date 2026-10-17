@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Questions pour l'arbitre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1556C0">
+<link rel="icon" href="icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F7FB; --surface:#FFFFFF; --fg:#0E1A2B; --muted:#566882; --line:#D8E0EC;
+  --accent:#1556C0; --accent-ink:#FFFFFF; --soft:#E3ECFA; --ball:#D6EB3B; --ok:#12703F; --err:#B3261E;
+  --display:'Barlow Condensed','Arial Narrow',sans-serif;
+  --body:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0B1422; --surface:#132033; --fg:#E8EEF8; --muted:#9FB1CB; --line:#26374F;
+  --accent:#6AA3FF; --accent-ink:#071427; --soft:#1B2E4F; --ok:#5FD19A; --err:#FF8A80; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-top:max(24px,env(safe-area-inset-top,0px));padding-bottom:170px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:32px}
+header{display:flex;flex-direction:column;gap:10px}
+.eyebrow{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ball{width:12px;height:12px;border-radius:50%;background:var(--ball);box-shadow:inset 0 0 0 1.5px rgba(14,26,43,.35)}
+h1{font-family:var(--display);font-size:clamp(38px,9vw,52px);line-height:1;margin:0;font-weight:700;text-wrap:balance}
+.lead{margin:0;color:var(--muted);max-width:60ch}
+section{display:flex;flex-direction:column;gap:22px;border-top:2px solid var(--line);padding-top:16px}
+section>h2{margin:0;font-family:var(--display);font-size:30px;line-height:1.05;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+section>h2 .cnt{font-family:var(--body);font-size:13px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+section>h2 .cnt.done{color:var(--ok)}
+fieldset{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:10px}
+legend{padding:0;font-weight:800;font-size:16px;margin-bottom:10px;text-wrap:balance}
+legend .hint{display:block;font-weight:600;font-size:12.5px;color:var(--muted);margin-top:2px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative;display:block;max-width:100%}
+.opt input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.opt span{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font-weight:700}
+.opt span::before{content:"";flex:none;width:18px;height:18px;border:2px solid var(--muted)}
+.opt.one span::before{border-radius:50%}
+.opt.many span::before{border-radius:5px}
+.opt input:checked+span{background:var(--soft);border-color:var(--accent)}
+.opt input:checked+span::before{border-color:var(--accent);background:var(--accent) center/12px no-repeat;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.4l2.3 2.3 4.7-5' fill='none' stroke='white' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.opt.one input:checked+span::before{background-image:radial-gradient(circle,var(--accent-ink) 0 3px,transparent 3.5px);background-size:auto}
+.opt input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+textarea{width:100%;min-height:96px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);font:inherit;resize:vertical}
+textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1.5px solid var(--line);
+  padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.bar-in{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.prog{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.prog b{font-variant-numeric:tabular-nums;font-size:14px}
+.track{height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);transition:width .25s}
+.btn{min-height:48px;padding:0 22px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+.btn:disabled{background:var(--line);color:var(--muted);cursor:not-allowed}
+.status{font-size:13px;color:var(--muted);min-height:18px}
+.status.err{color:var(--err);font-weight:700}
+#thanks{display:none;flex-direction:column;gap:14px;padding-top:40px}
+#thanks.on{display:flex}
+#thanks .big{font-family:var(--display);font-size:clamp(44px,12vw,68px);line-height:1;font-weight:700}
+.link{background:none;border:0;padding:0;min-height:44px;color:var(--accent);font:inherit;font-weight:800;text-align:left;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap" id="page">
+  <header>
+    <div class="eyebrow"><span class="ball"></span>PadeLive · padel et tournois</div>
+    <h1>Questions pour l'arbitre</h1>
+    <p class="lead">Je développe PadeLive, une application pour aider les arbitres à gérer leurs tournois de padel. 21 questions à cocher, environ 5 minutes, sans rien écrire. Les réponses sont anonymes : aucun nom n'est demandé.</p>
+  </header>
+  <main id="form" class="wrap" style="gap:32px"></main>
+</div>
+
+<div class="wrap" id="thanks" role="status">
+  <div class="eyebrow"><span class="ball"></span>PadeLive</div>
+  <div class="big">Merci !</div>
+  <p class="lead">Tes réponses sont bien arrivées. Elles m'aident à construire une application vraiment utile pour les arbitres.</p>
+  <button class="link" id="again" type="button">Remplir une autre fiche</button>
+</div>
+
+<div class="bar" id="bar">
+  <div class="bar-in">
+    <div class="row">
+      <div class="prog"><b id="pcount">0 sur 21 questions</b><div class="track"><div class="fill" id="pfill"></div></div></div>
+      <button class="btn" id="send" type="button" disabled>Envoyer</button>
+    </div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+  </div>
+</div>
+
+<script>
+const SUPA_URL = 'https://qyavfokrlyliaunbhifo.supabase.co';
+const SUPA_KEY = 'sb_publishable_svUKB5vvGFG3dmJZU7E9cA_SMr2fhfl';
+const TABLE = 'reponses_arbitres';
+const DRAFT = 'padelive-questionnaire-brouillon';
+
+/* col = nom de la colonne dans la table Supabase */
+const S = [
+ {t:"Son expérience", qs:[
+  {id:"nbTournois", col:"nb_tournois", q:"Combien de tournois arbitre-t-il par mois ?", k:"one", o:["Moins de 5","5 à 10","Plus de 10"]},
+  {id:"categories", col:"categories", q:"Quelles catégories arbitre-t-il ?", k:"many", o:["P25","P50","P100","P250 ou plus","Autres formats"]},
+  {id:"nbPaires", col:"nb_paires", q:"Combien de paires par tournoi, en général ?", k:"many", o:["8","10","12","16","Plus de 16"]},
+  {id:"terrains", col:"terrains", q:"Combien de terrains a-t-il à disposition ?", k:"many", o:["2 ou 3","4","5 ou 6","7 ou plus"]}
+ ]},
+ {t:"Comment il fait aujourd'hui", qs:[
+  {id:"outil", col:"outils", q:"Avec quoi suit-il le tournoi ?", k:"many", o:["Papier et stylo","Tableur (Excel, Sheets)","Application du club ou de la fédération","Tableau affiché au mur","Autre"]},
+  {id:"tirage", col:"tirage", q:"Comment fait-il le tirage ?", k:"many", o:["À la main sur papier","Dans un tableur","Avec un logiciel","Tirage au sort sur place"]},
+  {id:"annonce", col:"annonce", q:"Comment les joueurs apprennent-ils leur prochain match ?", k:"many", o:["Ils viennent le demander","Annonce au micro","Groupe WhatsApp","Tableau affiché","Autre"]},
+  {id:"prepa", col:"prepa", q:"Combien de temps lui faut-il pour préparer le tableau ?", k:"one", o:["Moins de 15 min","15 à 30 min","Plus de 30 min"]}
+ ]},
+ {t:"Règles et format", qs:[
+  {id:"format", col:"format_tournoi", q:"Quel format utilise-t-il le plus ?", k:"one", o:["Poules puis tableau","Élimination directe + matchs de classement","Ça varie selon le tournoi"]},
+  {id:"match", col:"format_match", q:"Quel format de match ?", k:"many", o:["1 set de 6 jeux","1 set de 9 jeux","Ça varie selon le niveau du tournoi"]},
+  {id:"avantage", col:"avantage", q:"Avec ou sans avantage ?", k:"one", o:["Sans avantage (point en or)","Avec avantage","Ça varie"]},
+  {id:"seeds", col:"tetes_de_serie", q:"Comment choisit-il les têtes de série ?", k:"one", o:["Somme des deux classements","Classement du meilleur joueur de la paire","Au jugement de l'arbitre","Pas de têtes de série"]},
+  {id:"manuel", col:"tableau_manuel", q:"Arrive-t-il qu'il fasse le tableau à la main ?", k:"one", o:["Jamais","Parfois","Souvent"]}
+ ]},
+ {t:"Pendant le tournoi", qs:[
+  {id:"problemes", col:"problemes", q:"Quels problèmes rencontre-t-il le plus ?", k:"many", o:["Retards","Forfaits","Abandons sur blessure","Erreurs de score","Terrains occupés","Joueurs perdus : où et quand jouer ?","Changements d'adversaire"]}
+ ]},
+ {t:"Matériel", qs:[
+  {id:"appareil", col:"appareil", q:"Sur quel appareil utiliserait-il l'application ?", k:"many", o:["Téléphone","Tablette","Ordinateur portable","Aucun, il préfère le papier"]},
+  {id:"reseau", col:"reseau", q:"Comment est la connexion internet au club ?", k:"one", o:["Bonne","Correcte","Mauvaise ou absente"]},
+  {id:"saisie", col:"saisie_scores", q:"Dans une future application qui noterait les scores, qui devrait les saisir ?", k:"one", o:["Arbitre seulement","Arbitre et joueurs"]}
+ ]},
+ {t:"L'application", qs:[
+  {id:"indispensables", col:"fonctions_indispensables", q:"Quelles fonctions seraient indispensables pour lui ?", k:"many", o:["Tirage automatique par têtes de série","Tableau saisi à la main","Saisie rapide des scores","Planning des terrains et horaires","Page en direct pour les joueurs","Classement final","Statistiques"]},
+  {id:"joueurs", col:"demandes_joueurs", q:"Que demandent le plus les joueurs ?", k:"many", o:["Mon prochain match","Mon terrain et mon horaire","Le tableau","Le classement final","Des statistiques"]},
+  {id:"test", col:"accepte_test", q:"Accepterait-il de tester l'application ?", k:"one", o:["Oui, dans un vrai tournoi","Oui, la démo seulement","Pas sûr"]},
+  {id:"prix", col:"prix", q:"Serait-il prêt à payer ?", k:"one", o:["Gratuit uniquement","Quelques euros par tournoi","Un abonnement","Ne sait pas"]}
+ ]}
+];
+const ALL = S.flatMap(s => s.qs);
+const $ = id => document.getElementById(id);
+let answers = {}, note = '', sending = false;
+
+function loadDraft(){
+  try { const d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); if (d) { answers = d.answers || {}; note = d.note || ''; } } catch (e) {}
+}
+function saveDraft(){ try { localStorage.setItem(DRAFT, JSON.stringify({answers, note})); } catch (e) {} }
+function clearDraft(){ try { localStorage.removeItem(DRAFT); } catch (e) {} }
+function status(t, err){ const s = $('status'); s.textContent = t; s.className = 'status' + (err ? ' err' : ''); }
+
+function buildForm(){
+  const root = $('form'); root.innerHTML = '';
+  S.forEach((s, si) => {
+    const sec = document.createElement('section');
+    const h = document.createElement('h2');
+    h.innerHTML = '<span></span><span class="cnt" id="cnt' + si + '"></span>';
+    h.firstChild.textContent = s.t; sec.appendChild(h);
+    s.qs.forEach(q => {
+      const fs = document.createElement('fieldset');
+      const lg = document.createElement('legend'); lg.textContent = q.q;
+      const hint = document.createElement('span'); hint.className = 'hint';
+      hint.textContent = q.k === 'many' ? 'Plusieurs réponses possibles' : 'Une seule réponse'; lg.appendChild(hint);
+      fs.appendChild(lg);
+      const box = document.createElement('div'); box.className = 'opts';
+      const chosen = answers[q.id] || [];
+      q.o.forEach((o, i) => {
+        const lab = document.createElement('label'); lab.className = 'opt ' + q.k;
+        const inp = document.createElement('input');
+        inp.type = q.k === 'many' ? 'checkbox' : 'radio'; inp.name = 'q-' + q.id; inp.id = 'q-' + q.id + '-' + i; inp.value = o;
+        inp.checked = chosen.indexOf(o) >= 0;
+        inp.addEventListener('change', () => onPick(q));
+        const sp = document.createElement('span'); sp.textContent = o;
+        lab.appendChild(inp); lab.appendChild(sp); box.appendChild(lab);
+      });
+      fs.appendChild(box); sec.appendChild(fs);
+    });
+    root.appendChild(sec);
+  });
+  const nsec = document.createElement('section');
+  nsec.innerHTML = '<h2><span>Une remarque ?</span></h2><label for="note" class="lead">Facultatif. Pas de nom ni de numéro de téléphone, merci.</label><textarea id="note" maxlength="1000"></textarea>';
+  root.appendChild(nsec);
+  $('note').value = note;
+  $('note').addEventListener('input', () => { note = $('note').value; saveDraft(); });
+  refresh();
+}
+
+function onPick(q){
+  const vals = Array.from(document.querySelectorAll('input[name="q-' + q.id + '"]:checked')).map(i => i.value);
+  if (vals.length) answers[q.id] = vals; else delete answers[q.id];
+  saveDraft(); refresh();
+  if (!sending) status('');
+}
+
+function refresh(){
+  const n = ALL.filter(q => answers[q.id] && answers[q.id].length).length;
+  $('pcount').textContent = n + ' sur ' + ALL.length + ' questions';
+  $('pfill').style.width = (100 * n / ALL.length) + '%';
+  $('send').disabled = sending || n === 0;
+  S.forEach((s, si) => {
+    const d = s.qs.filter(q => answers[q.id] && answers[q.id].length).length;
+    const c = $('cnt' + si); if (!c) return;
+    c.textContent = d + ' / ' + s.qs.length; c.className = 'cnt' + (d === s.qs.length ? ' done' : '');
+  });
+}
+
+async function send(){
+  if (sending) return;
+  const row = {};
+  ALL.forEach(q => {
+    const v = answers[q.id];
+    if (v && v.length) row[q.col] = q.k === 'many' ? v : v[0];
+  });
+  if (note.trim()) row.remarque = note.trim().slice(0, 1000);
+  sending = true; $('send').disabled = true; $('send').textContent = 'Envoi…'; status('Envoi en cours…');
+  try {
+    const r = await fetch(SUPA_URL + '/rest/v1/' + TABLE, {
+      method: 'POST',
+      headers: {'apikey': SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal'},
+      body: JSON.stringify(row)
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    clearDraft(); answers = {}; note = '';
+    $('page').style.display = 'none'; $('bar').style.display = 'none';
+    $('thanks').classList.add('on'); window.scrollTo(0, 0);
+  } catch (e) {
+    status('L\'envoi a échoué. Vérifie ta connexion et réessaie : tes réponses sont conservées.', true);
+  } finally {
+    sending = false; $('send').textContent = 'Envoyer'; refresh();
+  }
+}
+
+$('send').addEventListener('click', send);
+$('again').addEventListener('click', () => {
+  $('thanks').classList.remove('on'); $('page').style.display = ''; $('bar').style.display = '';
+  buildForm(); status(''); window.scrollTo(0, 0);
+});
+loadDraft(); buildForm();
+</script>
+</body>
+</html>
